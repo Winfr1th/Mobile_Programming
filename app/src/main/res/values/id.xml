@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <id name="id"></id>
-    <id name="title"></id>
-    <id name="desc"></id>
+    <id name="id" />
+    <id name="customer_name"/>
+    <id name="jenis_kertas"/>
+    <id name="warna"/>
+    <id name="jumlah_rangkap"/>
+    <id name="jumlah_pcs"/>
+    <id name="note"/>
+
 </resources>

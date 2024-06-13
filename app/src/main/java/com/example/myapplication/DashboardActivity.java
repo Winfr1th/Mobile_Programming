@@ -5,18 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class DashboardActivity extends AppCompatActivity {
-
+    private DBManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        dbManager = new DBManager(this);
+        dbManager.open();
+        int jumlahData = dbManager.getRecordCount();
+        TextView totalData = findViewById(R.id.totalData);
+        totalData.setText("Total Data: " + jumlahData);
     }
 
     public void klikTampilkanData(View v)
     {
-        Intent i = new Intent(getApplicationContext(), CountryListActivity.class);
+        Intent i = new Intent(getApplicationContext(), PesananListActivity.class);
         startActivity(i);
     }
     public void klikAddData(View v)

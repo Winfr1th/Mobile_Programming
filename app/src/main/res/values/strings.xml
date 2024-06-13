@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="textview">SUardika</string>
+    <string-array name="jenis_kertas">
+        <item>A4</item>
+        <item>F4</item>
+        <item>A3</item>
+        <item>APP 210</item>
+        <item>APP 150</item>
+        <item>APP 260</item>
+        <item>Foto</item>
+    </string-array>
+    <string-array name="warna">
+        <item>Berwarna</item>
+        <item>Hitam Putih</item>
+    </string-array>
 </resources>
