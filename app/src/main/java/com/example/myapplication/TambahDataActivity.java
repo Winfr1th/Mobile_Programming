@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class TambahDataActivity extends AppCompatActivity {
 
@@ -49,6 +50,9 @@ public class TambahDataActivity extends AppCompatActivity {
         String note = edNote.getText().toString();
 
         dbManager.insert(customerName, jenisKertas, warna, jumlahRangkap, jumlahPcs, note);
+        Toast.makeText(this, "Berhasil menambahkan data!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+        startActivity(intent);
     }
 
     public void klikKembali(View v)

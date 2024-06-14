@@ -30,7 +30,6 @@ public class DBManager {
     public void insert(String customerName, String jenisKertas, String warna, int jumlahRangkap, int jumlahPcs, String note) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.CUSTOMER_NAME, customerName);
-//        contentValue.put(DatabaseHelper.UPLOAD_FILE, uploadFile);
         contentValue.put(DatabaseHelper.JENIS_KERTAS, jenisKertas);
         contentValue.put(DatabaseHelper.WARNA, warna);
         contentValue.put(DatabaseHelper.JUMLAH_RANGKAP, jumlahRangkap);
@@ -51,7 +50,6 @@ public class DBManager {
     public int update(long _id, String customerName, String jenisKertas, String warna, int jumlahRangkap, int jumlahPcs, String note) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.CUSTOMER_NAME, customerName);
-//        contentValues.put(DatabaseHelper.UPLOAD_FILE, uploadFile);
         contentValues.put(DatabaseHelper.JENIS_KERTAS, jenisKertas);
         contentValues.put(DatabaseHelper.WARNA, warna);
         contentValues.put(DatabaseHelper.JUMLAH_RANGKAP, jumlahRangkap);

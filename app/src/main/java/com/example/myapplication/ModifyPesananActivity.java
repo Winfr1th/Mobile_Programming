@@ -9,13 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-public class ModifyCountryActivity extends AppCompatActivity implements View.OnClickListener {
+public class ModifyPesananActivity extends AppCompatActivity implements View.OnClickListener {
     private DBManager dbManager;
-    EditText edCustomerName, edUploadFile, edJumlahRangkap, edJumlahPcs, edNote;
+    EditText edCustomerName, edJumlahRangkap, edJumlahPcs, edNote;
     private Spinner spinnerJenisKertas, spinnerWarna;
-    private ImageView imageView;
-    private static final int PICK_IMAGE_REQUEST = 1;
     private long _id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +29,7 @@ public class ModifyCountryActivity extends AppCompatActivity implements View.OnC
         edJumlahRangkap = findViewById(R.id.editTextNumberRangkap);
         edJumlahPcs = findViewById(R.id.editTextNumberPcs);
         edNote = findViewById(R.id.editTextNote);
-//        imageView = findViewById(R.id.imageView);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Open image picker when ImageView is clicked
-//                openImagePicker();
-//            }
-//        });
+
 
         ArrayAdapter<CharSequence> adapterJenisKertas = ArrayAdapter.createFromResource(this, R.array.jenis_kertas, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> adapterWarna = ArrayAdapter.createFromResource(this, R.array.warna, android.R.layout.simple_spinner_item);
@@ -80,7 +72,7 @@ public class ModifyCountryActivity extends AppCompatActivity implements View.OnC
         int jumlahRangkap = Integer.parseInt(edJumlahRangkap.getText().toString());
         int jumlahPcs = Integer.parseInt(edJumlahPcs.getText().toString());
         String note = edNote.getText().toString();
-
+        Toast.makeText(this, "Data Berhasil diubah!", Toast.LENGTH_SHORT).show();
         dbManager.update(_id, customerName, jenisKertas, warna, jumlahRangkap, jumlahPcs, note);
             Intent intent = new Intent(getApplicationContext(), PesananListActivity.class);
             startActivity(intent);
@@ -88,6 +80,7 @@ public class ModifyCountryActivity extends AppCompatActivity implements View.OnC
     public void klikHapus(View v)
     {
         dbManager.delete(_id);
+        Toast.makeText(this, "Data Berhasil dihapus!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), PesananListActivity.class);
         startActivity(intent);
     }

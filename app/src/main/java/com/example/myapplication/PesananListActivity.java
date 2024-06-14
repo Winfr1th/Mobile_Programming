@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,72 +13,67 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import java.util.ArrayList;
+
+
 
 public class PesananListActivity extends AppCompatActivity {
 
-
+    private RecyclerView recyclerView;
+    private PesananAdapter adapter;
+    private ArrayList<Pesanan> pesananList;
     private DBManager dbManager;
-
-    private ListView listView;
-
-    private SimpleCursorAdapter adapter;
-
-    final String[] from = new String[] { DatabaseHelper._ID,
-            DatabaseHelper.CUSTOMER_NAME, DatabaseHelper.JENIS_KERTAS, DatabaseHelper.WARNA, DatabaseHelper.JUMLAH_RANGKAP, DatabaseHelper.JUMLAH_PCS, DatabaseHelper.NOTE };
-
-    final int[] to = new int[] { R.id.id, R.id.customer_name, R.id.jenis_kertas, R.id.warna, R.id.jumlah_rangkap, R.id.jumlah_pcs, R.id.note };
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_emp_list);
+        setContentView(R.layout.list_view);
+
+        recyclerView = findViewById(R.id.recycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        pesananList = new ArrayList<>();
 
         dbManager = new DBManager(this);
         dbManager.open();
 
+        fetchPesanans();
 
-        Cursor cursor = dbManager.fetch();
+        adapter = new PesananAdapter(pesananList);
+        recyclerView.setAdapter(adapter);
 
-        listView = findViewById(R.id.list_view);
-        listView.setEmptyView(findViewById(R.id.empty));
-
-        adapter = new SimpleCursorAdapter(this, R.layout.activity_view_record, cursor, from, to, 0);
-        adapter.notifyDataSetChanged();
-
-        listView.setAdapter(adapter);
-
-
-        // KLIK ITEM DI LISTVIEW
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter.setOnItemClickListener(new PesananAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
-                Cursor cursor = (Cursor) listView.getItemAtPosition(position);
-
-                String id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper._ID));
-                String customerName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.CUSTOMER_NAME));
-                String selectedJenisKertas = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.JENIS_KERTAS));
-                String selectedWarna = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.WARNA));
-                String rangkap = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.JUMLAH_RANGKAP));
-                String pcs = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.JUMLAH_PCS));
-                String noteText = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.NOTE));
-
-
-
-
-                Intent modify_intent = new Intent(getApplicationContext(), ModifyCountryActivity.class);
-                modify_intent.putExtra("id", id);
-                modify_intent.putExtra("customerName", customerName);
-                modify_intent.putExtra("jenisKertas", selectedJenisKertas);
-                modify_intent.putExtra("warna", selectedWarna);
-                modify_intent.putExtra("jumlahRangkap", rangkap);
-                modify_intent.putExtra("jumlahPcs", pcs);
-                modify_intent.putExtra("note", noteText);
-
-                startActivity(modify_intent);
+            public void onItemClick(int position) {
+                Pesanan pesanan = pesananList.get(position);
+                Intent intent = new Intent(getApplicationContext(), ModifyPesananActivity.class);
+                intent.putExtra("id", String.valueOf(pesanan.getId()));
+                intent.putExtra("customerName", pesanan.getCustomerName());
+                intent.putExtra("jenisKertas", pesanan.getJenisKertas());
+                intent.putExtra("warna", pesanan.getWarna());
+                intent.putExtra("jumlahRangkap", String.valueOf(pesanan.getJumlahRangkap()));
+                intent.putExtra("jumlahPcs", String.valueOf(pesanan.getJumlahPcs()));
+                intent.putExtra("note", pesanan.getNote());
+                startActivity(intent);
             }
         });
+    }
 
-
+    private void fetchPesanans() {
+        Cursor cursor = dbManager.fetch();
+        if (cursor.moveToFirst()) {
+            do {
+                Pesanan pesanan = new Pesanan(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper._ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.CUSTOMER_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.JENIS_KERTAS)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.WARNA)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.NOTE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.JUMLAH_RANGKAP)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.JUMLAH_PCS))
+                );
+                pesananList.add(pesanan);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 
 
