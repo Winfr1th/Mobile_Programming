@@ -95,7 +95,7 @@ public class ModifyCountryActivity extends AppCompatActivity implements View.OnC
     public void klikKembali(View v)
     {
 
-        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), PesananListActivity.class);
         startActivity(intent);
     }
 

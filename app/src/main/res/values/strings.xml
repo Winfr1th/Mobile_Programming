@@ -14,4 +14,17 @@
         <item>Berwarna</item>
         <item>Hitam Putih</item>
     </string-array>
+    <string name="save">Save</string>
+    <string name="hapus">Hapus</string>
+    <string name="kembali">Kembali</string>
+    <string name="jumlah_rangkap">Jumlah Rangkap</string>
+    <string name="name">Name</string>
+    <string name="jumlah_pcs">Jumlah Pcs</string>
+    <string name="note">Note</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="list_data">List</string>
+    <string name="data_pesanan">Jumlah Data Pesanan</string>
+    <string name="tambah_data">+</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="total_data">total data</string>
 </resources>

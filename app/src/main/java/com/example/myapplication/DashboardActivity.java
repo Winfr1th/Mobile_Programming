@@ -16,8 +16,8 @@ public class DashboardActivity extends AppCompatActivity {
         dbManager = new DBManager(this);
         dbManager.open();
         int jumlahData = dbManager.getRecordCount();
-        TextView totalData = findViewById(R.id.totalData);
-        totalData.setText("Total Data: " + jumlahData);
+        TextView totalData = findViewById(R.id.total_data);
+        totalData.setText(String.valueOf(jumlahData));
     }
 
     public void klikTampilkanData(View v)
